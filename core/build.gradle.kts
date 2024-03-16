@@ -52,14 +52,11 @@ tasks {
 }
 
 dependencies {
-    implementation(project(":gdx-ldtk-loader"))
     implementation(libs.harlequin.core)
     implementation(libs.harlequin.ashley)
     implementation(libs.perceptual)
     implementation(libs.gdx.core)
     implementation(libs.gdx.ai)
-    implementation(libs.gdx.box2d.core)
-    implementation(libs.gdx.controllers.core)
     implementation(libs.ashley)
     implementation(libs.tommyettinger.textratypist)
     implementation(libs.tommyettinger.jdkgdxds)

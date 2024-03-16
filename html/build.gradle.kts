@@ -97,26 +97,18 @@ tasks.create("dist") {
 java.sourceSets.main.configure {
     val externalSrc = listOf(
         ":core",
-        ":gdx-json-parser",
-        ":gdx-ldtk-loader",
     ).map { project(it).sourceSets.main.get().allJava.srcDirs }
     compileClasspath += files(externalSrc)
 }
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":gdx-json-parser"))
-    implementation(project(":gdx-ldtk-loader"))
     implementation(libs.java.inject)
     implementation(libs.gdx.backend.gwt)
     sources(libs.gdx.backend.gwt)
     sources(libs.jsinterop)
     sources(libs.gdx.core)
     sources(libs.gdx.ai)
-    sources(libs.gdx.box2d.core)
-    sources(libs.gdx.box2d.gwt)
-    sources(libs.gdx.controllers.core)
-    sources(libs.gdx.controllers.gwt)
     sources(libs.ashley)
     sources(libs.harlequin.core)
     sources(libs.harlequin.ashley)
