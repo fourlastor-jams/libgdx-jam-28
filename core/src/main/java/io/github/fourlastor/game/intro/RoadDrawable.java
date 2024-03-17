@@ -21,11 +21,13 @@ class RoadDrawable extends ShapeDrawerDrawable {
     };
 
     private static final int CAM_X = 0;
+    private static final int INITIAL_CAMERA_DEPTH = 10;
+    private static final int INITIAL_CAMERA_Y = 180;
 
     /**
      * Height from the floor
      */
-    private static final int CAM_Y = 180;
+    private float camY = INITIAL_CAMERA_Y;
 
     /** How far along the road. */
     private float camZ = 0;
@@ -33,7 +35,7 @@ class RoadDrawable extends ShapeDrawerDrawable {
     /**
      * Camera distance from screen
      */
-    private static final int CAMERA_DEPTH = 10;
+    private float cameraDepth = INITIAL_CAMERA_DEPTH;
 
     /** Length of a single segment. */
     private static final int SEGMENT_LENGTH = 500;
@@ -66,7 +68,7 @@ class RoadDrawable extends ShapeDrawerDrawable {
         int segmentIndex = findSegmentIndex(camZ);
         for (int i = segmentIndex; i < segments.size && i - segments.size < 10; i++) {
             Segment segment = segments.get(i);
-            segment.project(CAM_X, CAM_Y, camZ, CAMERA_DEPTH, width, height, width / 2);
+            segment.project(CAM_X, camY, camZ, cameraDepth, width, height, width / 2);
             segment.render(shapeDrawer);
         }
         //            camZ += 300;
@@ -78,6 +80,39 @@ class RoadDrawable extends ShapeDrawerDrawable {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camZ += 100;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                camY += 30;
+            } else {
+                camY += 10;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                camY -= 30;
+            } else {
+                camY -= 10;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                cameraDepth += 1f;
+            } else {
+                cameraDepth += 0.1f;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                cameraDepth -= 1f;
+            } else {
+                cameraDepth -= 0.1f;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_0)) {
+            camZ = 0;
+            camY = INITIAL_CAMERA_Y;
+            cameraDepth = INITIAL_CAMERA_DEPTH;
         }
     }
 }
