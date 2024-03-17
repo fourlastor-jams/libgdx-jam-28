@@ -14,26 +14,31 @@ public class Segment {
 
     private final Color color;
 
+    public final float curve;
+
     private final Polygon shape = new Polygon(new float[] {0, 0, 0, 0, 0, 0, 0, 0});
 
-    public Segment(float z1, float z2, Color color) {
+    public Segment(float z1, float z2, Color color, float curve) {
         p1 = new Point(z1);
         p2 = new Point(z2);
         this.color = color;
+        this.curve = curve;
     }
 
     public void project(
             float cameraX,
             float cameraY,
             float cameraZ,
+            float curve,
+            float dCurve,
             float cameraDepth,
             float width,
             float height,
             float roadWidth,
             float x,
             float y) {
-        p1.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
-        p2.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
+        p1.project(cameraX - curve, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
+        p2.project(cameraX - curve - dCurve, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
         shape.setVertex(0, x + p1.screen.x - p1.projectedWidth, y + p1.screen.y);
         shape.setVertex(1, x + p1.screen.x + p1.projectedWidth, y + p1.screen.y);
         shape.setVertex(2, x + p2.screen.x + p2.projectedWidth, y + p2.screen.y);
