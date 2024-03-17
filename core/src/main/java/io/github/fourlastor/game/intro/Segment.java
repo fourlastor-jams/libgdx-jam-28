@@ -28,17 +28,13 @@ public class Segment {
             float cameraDepth,
             float width,
             float height,
-            float roadWidth,
-            float cx,
-            float cy) {
-        cx = 0;
-        cy = 0;
+            float roadWidth) {
         p1.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
         p2.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
-        shape.setVertex(0, cx + p1.screen.x - p1.projectedWidth, cy + p1.screen.y);
-        shape.setVertex(1, cx + p1.screen.x + p1.projectedWidth, cy + p1.screen.y);
-        shape.setVertex(2, cx + p2.screen.x + p2.projectedWidth, cy + p2.screen.y);
-        shape.setVertex(3, cx + p2.screen.x - p2.projectedWidth, cy + p2.screen.y);
+        shape.setVertex(0, p1.screen.x - p1.projectedWidth, p1.screen.y);
+        shape.setVertex(1, p1.screen.x + p1.projectedWidth, p1.screen.y);
+        shape.setVertex(2, p2.screen.x + p2.projectedWidth, p2.screen.y);
+        shape.setVertex(3, p2.screen.x - p2.projectedWidth, p2.screen.y);
     }
 
     public void render(ShapeDrawer drawer) {
