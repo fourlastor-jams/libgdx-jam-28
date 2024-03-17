@@ -24,6 +24,7 @@ class RoadDrawable extends ShapeDrawerDrawable {
     private static final int CAM_X = 0;
     private static final int INITIAL_CAMERA_DEPTH = 10;
     private static final int INITIAL_CAMERA_Y = 180;
+    private static final int SEGMENTS_SEEN = 100;
 
     /**
      * Height from the floor
@@ -42,10 +43,10 @@ class RoadDrawable extends ShapeDrawerDrawable {
     private static final int SEGMENT_LENGTH = 500;
 
     /** How many road segments */
-    private static final int SEGMENTS_COUNT = 100;
+    private static final int SEGMENTS_COUNT = 500;
 
     /** How many segments form a single patch of road. */
-    private static final int RUMBLE_LENGTH = 1;
+    private static final int RUMBLE_LENGTH = 3;
 
     private final Array<Segment> segments;
 
@@ -72,7 +73,7 @@ class RoadDrawable extends ShapeDrawerDrawable {
         shapeDrawer.filledRectangle(x, y, width, height);
         screenRectangle.set(x, y, width, height);
         int segmentIndex = findSegmentIndex(camZ);
-        for (int i = segmentIndex; i < segments.size && i - segments.size < 1; i++) {
+        for (int i = segmentIndex, counter = 0; i < segments.size && counter < SEGMENTS_SEEN; i++, counter++) {
             Segment segment = segments.get(i);
             segment.project(CAM_X, camY, camZ, cameraDepth, width, height, width / 2, x, y);
             if (segment.inside(screenRectangle)) {
