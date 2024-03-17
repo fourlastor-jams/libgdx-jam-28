@@ -2,6 +2,7 @@ package io.github.fourlastor.game.intro;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -28,18 +29,32 @@ public class Segment {
             float cameraDepth,
             float width,
             float height,
-            float roadWidth) {
+            float roadWidth,
+            float x,
+            float y) {
         p1.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
         p2.project(cameraX, cameraY, cameraZ, cameraDepth, width, height, roadWidth);
-        shape.setVertex(0, p1.screen.x - p1.projectedWidth, p1.screen.y);
-        shape.setVertex(1, p1.screen.x + p1.projectedWidth, p1.screen.y);
-        shape.setVertex(2, p2.screen.x + p2.projectedWidth, p2.screen.y);
-        shape.setVertex(3, p2.screen.x - p2.projectedWidth, p2.screen.y);
+        shape.setVertex(0, x + p1.screen.x - p1.projectedWidth, y + p1.screen.y);
+        shape.setVertex(1, x + p1.screen.x + p1.projectedWidth, y + p1.screen.y);
+        shape.setVertex(2, x + p2.screen.x + p2.projectedWidth, y + p2.screen.y);
+        shape.setVertex(3, x + p2.screen.x - p2.projectedWidth, y + p2.screen.y);
     }
 
     public void render(ShapeDrawer drawer) {
         drawer.setColor(color);
         drawer.filledPolygon(shape);
+    }
+
+    private final Vector2 shapeVertex = new Vector2();
+
+    public boolean inside(Rectangle screenRectangle) {
+        for (int i = 0; i < 4; i++) {
+            Vector2 vertex = shape.getVertex(i, shapeVertex);
+            if (screenRectangle.contains(screenRectangle.x + screenRectangle.width / 2, vertex.y)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class Point {

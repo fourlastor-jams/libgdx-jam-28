@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 import space.earlygrey.shapedrawer.scene2d.ShapeDrawerDrawable;
@@ -63,18 +64,21 @@ class RoadDrawable extends ShapeDrawerDrawable {
         return Math.max(0, MathUtils.ceil(z / SEGMENT_LENGTH) % segments.size);
     }
 
+    private final Rectangle screenRectangle = new Rectangle();
+
     @Override
     public void drawShapes(ShapeDrawer shapeDrawer, float x, float y, float width, float height) {
+        shapeDrawer.setColor(Color.BROWN);
+        shapeDrawer.filledRectangle(x, y, width, height);
+        screenRectangle.set(x, y, width, height);
         int segmentIndex = findSegmentIndex(camZ);
-        for (int i = segmentIndex; i < segments.size && i - segments.size < 10; i++) {
+        for (int i = segmentIndex; i < segments.size && i - segments.size < 1; i++) {
             Segment segment = segments.get(i);
-            segment.project(CAM_X, camY, camZ, cameraDepth, width, height, width / 2);
-            segment.render(shapeDrawer);
+            segment.project(CAM_X, camY, camZ, cameraDepth, width, height, width / 2, x, y);
+            if (segment.inside(screenRectangle)) {
+                segment.render(shapeDrawer);
+            }
         }
-        //            camZ += 300;
-        //            if (camZ >= 100000) {
-        //                camZ = 0;
-        //            }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camZ -= 100;
         }
