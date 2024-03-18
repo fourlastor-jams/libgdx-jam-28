@@ -118,6 +118,7 @@ dependencies {
     sources(libs.tommyettinger.jdkgdxds)
     sources(libs.tommyettinger.regexodus)
     sources(libs.tommyettinger.textratypist)
+    sources(libs.shapedrawer)
 }
 
 fun DependencyHandlerScope.sources(
