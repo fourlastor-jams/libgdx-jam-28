@@ -26,6 +26,7 @@ ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
 dagger-core = { module = "com.google.dagger:dagger", version.ref = "dagger"}
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger"}
 dagger-gwt = { module = "com.google.dagger:dagger-gwt", version.ref = "dagger"}
+earlgray-shapedrawer = { module = "space.earlygrey:shapedrawer", version.ref = "shapedrawer"}
 java-inject = { module = "javax.inject:javax.inject", version.ref = "javax" }
 gdx-core = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
 gdx-platform = { module = "com.badlogicgames.gdx:gdx-platform", version.ref = "gdx" }
@@ -37,7 +38,6 @@ harlequin-core = { module = "io.github.fourlastor.gdx:harlequin", version.ref = 
 harlequin-ashley = { module = "io.github.fourlastor.gdx:harlequin-ashley", version.ref = "harlequin" }
 jsinterop = { module = "com.google.jsinterop:jsinterop-annotations", version.ref = "jsinterop" }
 perceptual = { module = "io.github.fourlastor.gdx:perceptual", version.ref = "perceptual" }
-shapedrawer = { module = "space.earlygrey:shapedrawer", version.ref = "shapedrawer"}
 tommyettinger-funderby = { module = "com.github.tommyettinger:funderby", version.ref = "tommyettinger-funderby"}
 tommyettinger-digital = { module = "com.github.tommyettinger:digital", version.ref = "tommyettinger-digital"}
 tommyettinger-jdkgdxds = { module = "com.github.tommyettinger:jdkgdxds", version.ref = "tommyettinger-jdkgdxds"}
