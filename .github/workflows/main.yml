@@ -16,6 +16,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - uses: jdno/setup-butler@v1
+      - name: Build core
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: core:assemble
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
