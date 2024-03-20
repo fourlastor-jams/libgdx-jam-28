@@ -1,4 +1,4 @@
-package io.github.fourlastor.game.intro;
+package io.github.fourlastor.game.level.road;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
