@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 
 public interface Setup {
 
+    float SPRITE_SCALE = 2;
+
     Color[] ROAD_COLORS = new Color[] {
         new Color(0x46857bff), new Color(0x3b6166ff),
     };
