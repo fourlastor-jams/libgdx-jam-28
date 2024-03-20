@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 
 public interface Setup {
 
-    Color[] COLORS = new Color[] {
-        new Color(Color.FOREST).lerp(Color.BLACK, 0.5f), new Color(Color.FOREST).lerp(Color.BLACK, 0.3f),
+    Color[] ROAD_COLORS = new Color[] {
+        new Color(0x46857bff), new Color(0x3b6166ff),
     };
 
     int INITIAL_CAMERA_DEPTH = 2;
