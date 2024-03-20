@@ -1,6 +1,5 @@
 package io.github.fourlastor.game.level.road;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -28,8 +27,6 @@ public class RoadDrawable extends ShapeDrawerDrawable {
 
     @Override
     public void drawShapes(ShapeDrawer shapeDrawer, float x, float y, float width, float height) {
-        shapeDrawer.setColor(Color.BROWN);
-        shapeDrawer.filledRectangle(x, y, width, height);
         screenRectangle.set(x, y, width, height);
         int segmentIndex = findSegmentIndex(cam.position.z);
         float percentRemaining = cam.position.z % Setup.SEGMENT_LENGTH / Setup.SEGMENT_LENGTH;
