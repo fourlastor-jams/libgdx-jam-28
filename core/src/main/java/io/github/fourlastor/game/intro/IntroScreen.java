@@ -7,20 +7,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.fourlastor.game.di.modules.AssetsModule;
 import javax.inject.Inject;
-import javax.inject.Named;
-
-import io.github.fourlastor.game.level.road.RoadDrawable;
-import space.earlygrey.shapedrawer.ShapeDrawer;
-import space.earlygrey.shapedrawer.scene2d.ShapeDrawerDrawable;
 
 public class IntroScreen extends ScreenAdapter {
 
@@ -31,7 +22,7 @@ public class IntroScreen extends ScreenAdapter {
     private final Viewport viewport;
 
     @Inject
-    public IntroScreen(InputMultiplexer inputMultiplexer, @Named(AssetsModule.WHITE_PIXEL) TextureRegion white) {
+    public IntroScreen(InputMultiplexer inputMultiplexer) {
         this.inputMultiplexer = inputMultiplexer;
         viewport = new FitViewport(640, 320);
         Batch batch = new PolygonSpriteBatch();

@@ -3,18 +3,23 @@ package io.github.fourlastor.game.level;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.di.ScreenScoped;
+import io.github.fourlastor.game.di.modules.AssetsModule;
+import io.github.fourlastor.game.level.component.PlayerRequestComponent;
+import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.road.RoadDrawable;
 import io.github.fourlastor.game.level.road.Segment;
 import io.github.fourlastor.harlequin.component.ActorComponent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 import space.earlygrey.shapedrawer.scene2d.ShapeDrawerDrawable;
-
-import javax.inject.Inject;
 
 /**
  * Factory to create various entities: player, buildings, enemies..
@@ -22,21 +27,35 @@ import javax.inject.Inject;
 @ScreenScoped
 public class EntitiesFactory {
 
-    private static final float SCALE_XY = 1f / 32f;
     private final TextureAtlas textureAtlas;
 
     private final Stage stage;
     private final ShapeDrawer shapeDrawer;
+    private final TextureRegion white;
+    private final RoadCam roadCam;
 
     @Inject
     public EntitiesFactory(
             TextureAtlas textureAtlas,
             Stage stage,
-            ShapeDrawer shapeDrawer
-    ) {
+            ShapeDrawer shapeDrawer,
+            @Named(AssetsModule.WHITE_PIXEL) TextureRegion white,
+            RoadCam roadCam) {
         this.textureAtlas = textureAtlas;
         this.stage = stage;
         this.shapeDrawer = shapeDrawer;
+        this.white = white;
+        this.roadCam = roadCam;
+    }
+
+    public Entity player() {
+        Entity entity = new Entity();
+        Image image = new Image(white);
+        image.setSize(50, 80);
+        image.setPosition(stage.getWidth() / 2, 0, Align.center | Align.bottom);
+        entity.add(new ActorComponent(image, Layer.PLAYER));
+        entity.add(new PlayerRequestComponent());
+        return entity;
     }
 
     public Entity road() {
@@ -46,7 +65,7 @@ public class EntitiesFactory {
         position += addRoad(segments, position, 150, 150, 150, 1);
         position += addRoad(segments, position, 0, 25, 0, 0);
         addRoad(segments, position, 150, 150, 150, -2);
-        ShapeDrawerDrawable drawable = new RoadDrawable(shapeDrawer, segments);
+        ShapeDrawerDrawable drawable = new RoadDrawable(shapeDrawer, segments, roadCam);
         Image image = new Image(drawable);
         image.setSize(stage.getWidth(), stage.getHeight());
         entity.add(new ActorComponent(image, Layer.ROAD));
@@ -55,7 +74,8 @@ public class EntitiesFactory {
 
     private void addSegment(Array<Segment> segments, int position, float curve) {
         Color color = Setup.COLORS[(position / Setup.RUMBLE_LENGTH) % Setup.COLORS.length];
-        Segment segment = new Segment(position * Setup.SEGMENT_LENGTH, (position + 1) * Setup.SEGMENT_LENGTH, color, curve);
+        Segment segment =
+                new Segment(position * Setup.SEGMENT_LENGTH, (position + 1) * Setup.SEGMENT_LENGTH, color, curve);
         segments.add(segment);
     }
 
@@ -68,7 +88,10 @@ public class EntitiesFactory {
             addSegment(segments, i + enter + basePosition, curve);
         }
         for (int i = 0; i < leave; i++) {
-            addSegment(segments, i + enter + hold + basePosition, Interpolation.pow2Out.apply(curve, 0, (float) i / leave));
+            addSegment(
+                    segments,
+                    i + enter + hold + basePosition,
+                    Interpolation.pow2Out.apply(curve, 0, (float) i / leave));
         }
 
         return enter + hold + leave;

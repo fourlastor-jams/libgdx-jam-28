@@ -31,6 +31,7 @@ public class LevelScreen extends ScreenAdapter {
     @Override
     public void show() {
         engine.addEntity(entitiesFactory.road());
+        engine.addEntity(entitiesFactory.player());
     }
 
     @Override

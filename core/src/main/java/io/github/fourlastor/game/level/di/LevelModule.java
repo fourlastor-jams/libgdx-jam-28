@@ -15,15 +15,16 @@ import dagger.Provides;
 import io.github.fourlastor.game.di.ScreenScoped;
 import io.github.fourlastor.game.di.modules.AssetsModule;
 import io.github.fourlastor.game.level.Layer;
+import io.github.fourlastor.game.level.Setup;
 import io.github.fourlastor.game.level.input.PlayerInputSystem;
+import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.system.ClearScreenSystem;
 import io.github.fourlastor.harlequin.system.StageSystem;
-import space.earlygrey.shapedrawer.ShapeDrawer;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import javax.inject.Named;
 import javax.inject.Qualifier;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 @Module
 public class LevelModule {
@@ -58,16 +59,19 @@ public class LevelModule {
 
     @Provides
     @ScreenScoped
+    public RoadCam roadCam() {
+        return new RoadCam(Setup.INITIAL_CAMERA_Y, Setup.INITIAL_CAMERA_DEPTH);
+    }
+
+    @Provides
+    @ScreenScoped
     public Batch batch() {
         return new SpriteBatch();
     }
 
     @Provides
     @ScreenScoped
-    public ShapeDrawer shapeDrawer(
-            Batch batch,
-            @Named(AssetsModule.WHITE_PIXEL) TextureRegion white
-    ) {
+    public ShapeDrawer shapeDrawer(Batch batch, @Named(AssetsModule.WHITE_PIXEL) TextureRegion white) {
         return new ShapeDrawer(batch, white);
     }
 
