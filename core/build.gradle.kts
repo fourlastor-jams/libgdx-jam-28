@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.gdx.core)
     implementation(libs.gdx.ai)
     implementation(libs.ashley)
+    implementation(libs.earlgray.shapedrawer)
     implementation(libs.tommyettinger.textratypist)
     implementation(libs.tommyettinger.jdkgdxds)
     implementation(libs.dagger.core)
