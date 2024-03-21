@@ -6,6 +6,8 @@ import com.badlogic.gdx.ai.msg.Telegram;
 
 public abstract class InputState implements State<Entity> {
 
+    private float delta;
+
     public InputState() {}
 
     @Override
@@ -20,5 +22,13 @@ public abstract class InputState implements State<Entity> {
     @Override
     public boolean onMessage(Entity entity, Telegram telegram) {
         return false;
+    }
+
+    public void setDelta(float delta) {
+        this.delta = delta;
+    }
+
+    public float getDelta() {
+        return delta;
     }
 }

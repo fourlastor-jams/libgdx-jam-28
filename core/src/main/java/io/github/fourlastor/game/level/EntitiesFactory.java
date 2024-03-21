@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.di.ScreenScoped;
 import io.github.fourlastor.game.di.modules.AssetsModule;
+import io.github.fourlastor.game.level.component.AnimatedImageComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
 import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.road.RoadDrawable;
@@ -20,7 +22,6 @@ import io.github.fourlastor.game.level.road.Segment;
 import io.github.fourlastor.harlequin.animation.Animation;
 import io.github.fourlastor.harlequin.animation.FixedFrameAnimation;
 import io.github.fourlastor.harlequin.component.ActorComponent;
-import io.github.fourlastor.harlequin.ui.AnimatedImage;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
@@ -87,11 +88,12 @@ public class EntitiesFactory {
             drawables.add(new TextureRegionDrawable(region));
         }
         FixedFrameAnimation<Drawable> animation = new FixedFrameAnimation<>(0.1f, drawables, Animation.PlayMode.LOOP);
-        Image image = new AnimatedImage(animation);
+        ScaledAnimatedImage image = new ScaledAnimatedImage(animation);
         image.setScale(Setup.SPRITE_SCALE);
         image.setPosition(stage.getWidth() / 2, 0, Align.center | Align.bottom);
         entity.add(new ActorComponent(image, Layer.PLAYER));
         entity.add(new PlayerRequestComponent());
+        entity.add(new AnimatedImageComponent(image));
         return entity;
     }
 
