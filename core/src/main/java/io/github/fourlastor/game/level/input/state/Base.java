@@ -67,6 +67,8 @@ public class Base extends InputState {
         cam.position.x = MathUtils.clamp(
                 cam.position.x, -Setup.PLAYER_MAX_OFF_ROAD_POSITION, Setup.PLAYER_MAX_OFF_ROAD_POSITION);
 
+        cam.speedPercent = speedPercent;
+
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 cam.position.y += 30;

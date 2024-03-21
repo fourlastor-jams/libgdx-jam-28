@@ -14,6 +14,9 @@ public class RoadCam {
     /** How far the camera is from the screen. */
     public float depth;
 
+    /** TODO: Hack for parallax. */
+    public float speedPercent;
+
     public RoadCam(float initialY, float initialDepth) {
         position.y = initialY;
         depth = initialDepth;
