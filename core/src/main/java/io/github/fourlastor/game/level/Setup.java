@@ -26,4 +26,5 @@ public interface Setup {
     float PLAYER_DECELERATION = -20;
     float PLAYER_BREAKING = -50;
     float PLAYER_STEERING = 5;
+    float PLAYER_STEERING_ANIMATION_DELAY = 0.3f;
 }

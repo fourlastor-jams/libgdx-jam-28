@@ -90,6 +90,7 @@ public class EntitiesFactory {
         FixedFrameAnimation<Drawable> animation = new FixedFrameAnimation<>(0.1f, drawables, Animation.PlayMode.LOOP);
         ScaledAnimatedImage image = new ScaledAnimatedImage(animation);
         image.setScale(Setup.SPRITE_SCALE);
+        image.setOrigin(Align.center | Align.bottom);
         image.setPosition(stage.getWidth() / 2, 0, Align.center | Align.bottom);
         entity.add(new ActorComponent(image, Layer.PLAYER));
         entity.add(new PlayerRequestComponent());
