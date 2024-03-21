@@ -28,7 +28,6 @@ public class Turning extends Base {
         super.enter(entity);
         timer = 0;
         animSet = false;
-        //        images().get(entity).image.setAnimation(animation);
     }
 
     @Override

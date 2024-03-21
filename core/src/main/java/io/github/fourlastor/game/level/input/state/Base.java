@@ -13,7 +13,9 @@ import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.level.Setup;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
 import io.github.fourlastor.game.level.component.PlayerComponent;
+import io.github.fourlastor.game.level.road.Road;
 import io.github.fourlastor.game.level.road.RoadCam;
+import io.github.fourlastor.game.level.road.Segment;
 import io.github.fourlastor.harlequin.animation.Animation;
 import io.github.fourlastor.harlequin.animation.FixedFrameAnimation;
 import javax.inject.Inject;
@@ -54,6 +56,11 @@ public class Base extends InputState {
         image.setSpeed(speedPercent);
         RoadCam cam = cam();
         cam.position.z += player.speed;
+
+        Road road = dependencies.road;
+        Segment currentSegment = road.segments.get(road.findSegmentIndex(cam.position.z));
+        cam.position.x = cam.position.x - Math.abs(currentSegment.dCurve) * speedPercent * currentSegment.curve * 3f;
+        cam.position.x = MathUtils.clamp(cam.position.x, -500, 500);
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -110,17 +117,20 @@ public class Base extends InputState {
 
         private final ComponentMapper<PlayerComponent> players;
         private final ComponentMapper<AnimatedImageComponent> images;
+        private final Road road;
 
         @Inject
         public Dependencies(
                 RoadCam cam,
                 TextureAtlas atlas,
                 ComponentMapper<PlayerComponent> players,
-                ComponentMapper<AnimatedImageComponent> images) {
+                ComponentMapper<AnimatedImageComponent> images,
+                Road road) {
             this.cam = cam;
             this.atlas = atlas;
             this.players = players;
             this.images = images;
+            this.road = road;
         }
     }
 }

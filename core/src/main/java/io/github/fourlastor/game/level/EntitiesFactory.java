@@ -3,7 +3,6 @@ package io.github.fourlastor.game.level;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,9 +12,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.di.ScreenScoped;
-import io.github.fourlastor.game.di.modules.AssetsModule;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
+import io.github.fourlastor.game.level.road.Road;
 import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.road.RoadDrawable;
 import io.github.fourlastor.game.level.road.Segment;
@@ -25,7 +24,6 @@ import io.github.fourlastor.harlequin.component.ActorComponent;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
-import javax.inject.Named;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 import space.earlygrey.shapedrawer.scene2d.ShapeDrawerDrawable;
 
@@ -39,21 +37,17 @@ public class EntitiesFactory {
 
     private final Stage stage;
     private final ShapeDrawer shapeDrawer;
-    private final TextureRegion white;
     private final RoadCam roadCam;
+    private final Road road;
 
     @Inject
     public EntitiesFactory(
-            TextureAtlas textureAtlas,
-            Stage stage,
-            ShapeDrawer shapeDrawer,
-            @Named(AssetsModule.WHITE_PIXEL) TextureRegion white,
-            RoadCam roadCam) {
+            TextureAtlas textureAtlas, Stage stage, ShapeDrawer shapeDrawer, RoadCam roadCam, Road road) {
         this.textureAtlas = textureAtlas;
         this.stage = stage;
         this.shapeDrawer = shapeDrawer;
-        this.white = white;
         this.roadCam = roadCam;
+        this.road = road;
     }
 
     public List<Entity> environment() {
@@ -105,7 +99,7 @@ public class EntitiesFactory {
         position += addRoad(segments, position, 150, 150, 150, 1);
         position += addRoad(segments, position, 0, 25, 0, 0);
         addRoad(segments, position, 150, 150, 150, -2);
-        ShapeDrawerDrawable drawable = new RoadDrawable(shapeDrawer, segments, roadCam);
+        ShapeDrawerDrawable drawable = new RoadDrawable(shapeDrawer, road, roadCam);
         Image image = new Image(drawable);
         image.setSize(stage.getWidth(), stage.getHeight());
         entity.add(new ActorComponent(image, Layer.ROAD));
