@@ -81,7 +81,7 @@ public class EntitiesFactory {
 
     public Entity player() {
         Entity entity = new Entity();
-        Array<TextureAtlas.AtlasRegion> regions = textureAtlas.findRegions("player/forward");
+        Array<TextureAtlas.AtlasRegion> regions = textureAtlas.findRegions("player/straight");
         Array<Drawable> drawables = new Array<>(regions.size);
         for (TextureAtlas.AtlasRegion region : regions) {
             drawables.add(new TextureRegionDrawable(region));
