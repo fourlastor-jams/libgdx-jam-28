@@ -42,7 +42,7 @@ public class EnvironmentParallaxImage extends Actor {
     public void act(float delta) {
         super.act(delta);
         Segment segment = road.segments.get(road.findSegmentIndex(cam.position.z));
-        currentDelta += -segment.curve * factor;
+        currentDelta += -segment.curve * factor * cam.speedPercent;
     }
 
     @Override
