@@ -60,7 +60,8 @@ public class Base extends InputState {
         Road road = dependencies.road;
         Segment currentSegment = road.segments.get(road.findSegmentIndex(cam.position.z));
         cam.position.x = cam.position.x - Math.abs(currentSegment.dCurve) * speedPercent * currentSegment.curve * 3f;
-        cam.position.x = MathUtils.clamp(cam.position.x, -500, 500);
+        cam.position.x = MathUtils.clamp(
+                cam.position.x, -Setup.PLAYER_MAX_OFF_ROAD_POSITION, Setup.PLAYER_MAX_OFF_ROAD_POSITION);
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
