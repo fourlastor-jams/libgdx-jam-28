@@ -28,4 +28,6 @@ public interface Setup {
     float PLAYER_STEERING = 5;
     float PLAYER_STEERING_ANIMATION_DELAY = 0.3f;
     float PLAYER_MAX_OFF_ROAD_POSITION = 700;
+    float PLAYER_CENTRIFUGAL_FORCE = 3f;
+    float PLAYER_ANIMATION_FRAME_TIME = 0.1f;
 }

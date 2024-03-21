@@ -35,7 +35,7 @@ public class Base extends InputState {
         for (TextureAtlas.AtlasRegion region : regions) {
             drawables.add(new TextureRegionDrawable(region));
         }
-        return new FixedFrameAnimation<>(0.1f, drawables, Animation.PlayMode.LOOP);
+        return new FixedFrameAnimation<>(Setup.PLAYER_ANIMATION_FRAME_TIME, drawables, Animation.PlayMode.LOOP);
     }
 
     @Override
@@ -59,7 +59,11 @@ public class Base extends InputState {
 
         Road road = dependencies.road;
         Segment currentSegment = road.segments.get(road.findSegmentIndex(cam.position.z));
-        cam.position.x = cam.position.x - Math.abs(currentSegment.dCurve) * speedPercent * currentSegment.curve * 3f;
+        cam.position.x = cam.position.x
+                - Math.abs(currentSegment.dCurve)
+                        * speedPercent
+                        * currentSegment.curve
+                        * Setup.PLAYER_CENTRIFUGAL_FORCE;
         cam.position.x = MathUtils.clamp(
                 cam.position.x, -Setup.PLAYER_MAX_OFF_ROAD_POSITION, Setup.PLAYER_MAX_OFF_ROAD_POSITION);
 
