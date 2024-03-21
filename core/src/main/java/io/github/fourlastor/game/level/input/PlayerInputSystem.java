@@ -9,8 +9,8 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import io.github.fourlastor.game.level.component.PlayerComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
-import io.github.fourlastor.game.level.input.state.Base;
-import io.github.fourlastor.game.level.road.RoadCam;
+import io.github.fourlastor.game.level.input.state.Straight;
+import io.github.fourlastor.game.level.input.state.Turning;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -37,7 +37,7 @@ public class PlayerInputSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        players.get(entity).stateMachine.update();
+        players.get(entity).stateMachine.update(deltaTime);
     }
 
     @Override
@@ -60,25 +60,29 @@ public class PlayerInputSystem extends IteratingSystem {
 
         private final InputStateMachine.Factory stateMachineFactory;
         private final MessageDispatcher messageDispatcher;
-        private final Provider<Base> baseStateProvider;
+        private final Provider<Straight> straightProvider;
+        private final Provider<Turning> turningProvider;
 
         @Inject
         public PlayerSetup(
                 InputStateMachine.Factory stateMachineFactory,
                 MessageDispatcher messageDispatcher,
-                RoadCam roadCam,
-                Provider<Base> baseStateProvider) {
+                Provider<Straight> straightProvider,
+                Provider<Turning> turningProvider) {
             this.stateMachineFactory = stateMachineFactory;
             this.messageDispatcher = messageDispatcher;
-            this.baseStateProvider = baseStateProvider;
+            this.straightProvider = straightProvider;
+            this.turningProvider = turningProvider;
         }
 
         @Override
         public void entityAdded(Entity entity) {
             entity.remove(PlayerRequestComponent.class);
-            InputStateMachine stateMachine = stateMachineFactory.create(entity, baseStateProvider.get());
+            Straight straight = straightProvider.get();
+            Turning turning = turningProvider.get();
+            InputStateMachine stateMachine = stateMachineFactory.create(entity, straight);
 
-            entity.add(new PlayerComponent(stateMachine));
+            entity.add(new PlayerComponent(stateMachine, straight, turning));
             stateMachine.getCurrentState().enter(entity);
             // messageDispatcher.addListener(stateMachine, Message.GAME_OVER.ordinal());
         }
