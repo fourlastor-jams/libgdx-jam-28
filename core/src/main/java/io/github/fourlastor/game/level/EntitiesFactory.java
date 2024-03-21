@@ -54,30 +54,35 @@ public class EntitiesFactory {
 
     public List<Entity> environment() {
         Entity sky = new Entity();
-        Actor skyImg = new EnvironmentParallaxImage(textureAtlas.findRegion("environment/sky"), 1f, roadCam, road);
+        Actor skyImg = new EnvironmentParallaxImage(textureAtlas.findRegion("environment/sky"), 0f, roadCam, road);
         skyImg.setScale(Setup.SPRITE_SCALE);
         sky.add(new ActorComponent(skyImg, Layer.SKY));
+        Entity stars = new Entity();
+        Actor starsImg =
+                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/stars"), 1.2f, roadCam, road);
+        starsImg.setScale(Setup.SPRITE_SCALE);
+        stars.add(new ActorComponent(starsImg, Layer.STARS));
         Entity bg0 = new Entity();
         Actor bg0Img =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background0"), 2f, roadCam, road);
+                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background0"), 3f, roadCam, road);
         bg0Img.setScale(Setup.SPRITE_SCALE);
         bg0.add(new ActorComponent(bg0Img, Layer.BG_0));
         Entity bg1 = new Entity();
         Actor bg1Img =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background1"), 3f, roadCam, road);
+                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background1"), 3.4f, roadCam, road);
         bg1Img.setScale(Setup.SPRITE_SCALE);
         bg1.add(new ActorComponent(bg1Img, Layer.BG_1));
         Entity bg2 = new Entity();
         Actor bg2Img =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background2"), 4f, roadCam, road);
+                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/background2"), 3.8f, roadCam, road);
         bg2Img.setScale(Setup.SPRITE_SCALE);
         bg2.add(new ActorComponent(bg2Img, Layer.BG_2));
         Entity ground = new Entity();
         Actor groundImg =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/ground"), 5f, roadCam, road);
+                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/ground"), 4f, roadCam, road);
         groundImg.setScale(Setup.SPRITE_SCALE);
         ground.add(new ActorComponent(groundImg, Layer.GROUND));
-        return Arrays.asList(sky, bg0, bg1, bg2, ground);
+        return Arrays.asList(sky, stars, bg0, bg1, bg2, ground);
     }
 
     public Entity player() {
