@@ -25,4 +25,5 @@ public interface Setup {
     float PLAYER_ACCELERATION = 40;
     float PLAYER_DECELERATION = -20;
     float PLAYER_BREAKING = -50;
+    float PLAYER_STEERING = 5;
 }

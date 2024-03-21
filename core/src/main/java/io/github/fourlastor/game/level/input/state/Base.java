@@ -38,13 +38,14 @@ public class Base extends InputState {
         speed = MathUtils.clamp(speed, 0, Setup.PLAYER_MAX_SPEED);
         float speedPercent = speed / Setup.PLAYER_MAX_SPEED;
         images.get(entity).image.setSpeed(speedPercent);
-
         cam.position.z += speed;
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            cam.position.x -= 5;
+            cam.position.x -= Setup.PLAYER_STEERING * speedPercent;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            cam.position.x += 5;
+            cam.position.x += Setup.PLAYER_STEERING * speedPercent;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
