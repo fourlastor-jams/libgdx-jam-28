@@ -85,6 +85,7 @@ public class LevelScreen extends ScreenAdapter implements Telegraph {
     public boolean handleMessage(Telegram msg) {
         if (msg.message == Message.DIED_BY_LAVA.ordinal()) {
             engine.removeEntity(player);
+            engine.addEntity(entitiesFactory.gameOver());
             died = true;
             return true;
         }
