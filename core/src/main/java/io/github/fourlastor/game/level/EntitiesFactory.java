@@ -1,10 +1,14 @@
 package io.github.fourlastor.game.level;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -12,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.di.ScreenScoped;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
+import io.github.fourlastor.game.level.component.LapComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
 import io.github.fourlastor.game.level.road.EnvironmentParallaxImage;
 import io.github.fourlastor.game.level.road.Road;
@@ -32,6 +37,7 @@ import space.earlygrey.shapedrawer.scene2d.ShapeDrawerDrawable;
 @ScreenScoped
 public class EntitiesFactory {
 
+    private final AssetManager assetManager;
     private final TextureAtlas textureAtlas;
 
     private final Stage stage;
@@ -41,7 +47,13 @@ public class EntitiesFactory {
 
     @Inject
     public EntitiesFactory(
-            TextureAtlas textureAtlas, Stage stage, ShapeDrawer shapeDrawer, RoadCam roadCam, Road road) {
+            AssetManager assetManager,
+            TextureAtlas textureAtlas,
+            Stage stage,
+            ShapeDrawer shapeDrawer,
+            RoadCam roadCam,
+            Road road) {
+        this.assetManager = assetManager;
         this.textureAtlas = textureAtlas;
         this.stage = stage;
         this.shapeDrawer = shapeDrawer;
@@ -106,6 +118,19 @@ public class EntitiesFactory {
         Image image = new Image(drawable);
         image.setSize(stage.getWidth(), stage.getHeight());
         entity.add(new ActorComponent(image, Layer.ROAD));
+        return entity;
+    }
+
+    public Entity lapCounter() {
+        Entity entity = new Entity();
+        BitmapFont font = assetManager.get("fonts/Gideon Roman/gideon-roman-64.fnt");
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+        style.fontColor = new Color(0xedce5eff);
+        Label label = new Label("", style);
+        label.setPosition(10, stage.getHeight() - 20, Align.topLeft);
+        entity.add(new LapComponent(label));
+        entity.add(new ActorComponent(label, Layer.LAP_COUNTER));
         return entity;
     }
 }

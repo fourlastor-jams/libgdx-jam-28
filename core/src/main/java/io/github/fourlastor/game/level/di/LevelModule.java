@@ -25,6 +25,7 @@ import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.road.Segment;
 import io.github.fourlastor.game.level.system.ClearScreenSystem;
 import io.github.fourlastor.game.level.system.CurveSystem;
+import io.github.fourlastor.game.level.system.LapSystem;
 import io.github.fourlastor.harlequin.system.StageSystem;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -41,10 +42,12 @@ public class LevelModule {
             PlayerInputSystem playerInputSystem,
             StageSystem stageSystem,
             ClearScreenSystem clearScreenSystem,
-            CurveSystem curveSystem) {
+            CurveSystem curveSystem,
+            LapSystem lapSystem) {
         Engine engine = new Engine();
         engine.addSystem(curveSystem);
         engine.addSystem(playerInputSystem);
+        engine.addSystem(lapSystem);
         engine.addSystem(clearScreenSystem);
         engine.addSystem(stageSystem);
         return engine;
