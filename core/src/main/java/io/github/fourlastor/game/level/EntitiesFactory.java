@@ -1,9 +1,7 @@
 package io.github.fourlastor.game.level;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -19,7 +17,6 @@ import io.github.fourlastor.game.level.road.EnvironmentParallaxImage;
 import io.github.fourlastor.game.level.road.Road;
 import io.github.fourlastor.game.level.road.RoadCam;
 import io.github.fourlastor.game.level.road.RoadDrawable;
-import io.github.fourlastor.game.level.road.Segment;
 import io.github.fourlastor.harlequin.animation.Animation;
 import io.github.fourlastor.harlequin.animation.FixedFrameAnimation;
 import io.github.fourlastor.harlequin.component.ActorComponent;
