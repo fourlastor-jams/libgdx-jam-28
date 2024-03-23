@@ -111,29 +111,4 @@ public class EntitiesFactory {
         entity.add(new ActorComponent(image, Layer.ROAD));
         return entity;
     }
-
-    private void addSegment(Array<Segment> segments, int position, float curve) {
-        Color color = Setup.ROAD_COLORS[(position / Setup.RUMBLE_LENGTH) % Setup.ROAD_COLORS.length];
-        Segment segment =
-                new Segment(position * Setup.SEGMENT_LENGTH, (position + 1) * Setup.SEGMENT_LENGTH, color, curve);
-        segments.add(segment);
-    }
-
-    private int addRoad(Array<Segment> segments, int basePosition, int enter, int hold, int leave, float curve) {
-        for (int i = 0; i < enter; i++) {
-            addSegment(segments, i + basePosition, Interpolation.pow2In.apply(0, curve, (float) i / enter));
-        }
-
-        for (int i = 0; i < hold; i++) {
-            addSegment(segments, i + enter + basePosition, curve);
-        }
-        for (int i = 0; i < leave; i++) {
-            addSegment(
-                    segments,
-                    i + enter + hold + basePosition,
-                    Interpolation.pow2Out.apply(curve, 0, (float) i / leave));
-        }
-
-        return enter + hold + leave;
-    }
 }
