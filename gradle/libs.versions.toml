@@ -16,6 +16,7 @@ shadow = "7.1.2"
 shapedrawer = "2.5.0"
 spotless = "6.10.0"
 perceptual = "1.0.0"
+tommyettinger-formic = "0.1.5"
 tommyettinger-funderby = "0.1.1"
 tommyettinger-digital = "0.4.5"
 tommyettinger-jdkgdxds = "1.4.5"
@@ -38,6 +39,7 @@ harlequin-core = { module = "io.github.fourlastor.gdx:harlequin", version.ref = 
 harlequin-ashley = { module = "io.github.fourlastor.gdx:harlequin-ashley", version.ref = "harlequin" }
 jsinterop = { module = "com.google.jsinterop:jsinterop-annotations", version.ref = "jsinterop" }
 perceptual = { module = "io.github.fourlastor.gdx:perceptual", version.ref = "perceptual" }
+tommyettinger-formic = { module = "com.github.tommyettinger:formic", version.ref = "tommyettinger-formic"}
 tommyettinger-funderby = { module = "com.github.tommyettinger:funderby", version.ref = "tommyettinger-funderby"}
 tommyettinger-digital = { module = "com.github.tommyettinger:digital", version.ref = "tommyettinger-digital"}
 tommyettinger-jdkgdxds = { module = "com.github.tommyettinger:jdkgdxds", version.ref = "tommyettinger-jdkgdxds"}

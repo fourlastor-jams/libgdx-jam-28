@@ -113,6 +113,7 @@ dependencies {
     sources(libs.harlequin.core)
     sources(libs.harlequin.ashley)
     sources(libs.perceptual)
+    sources(libs.tommyettinger.formic)
     sources(libs.tommyettinger.funderby)
     sources(libs.tommyettinger.digital)
     sources(libs.tommyettinger.jdkgdxds)

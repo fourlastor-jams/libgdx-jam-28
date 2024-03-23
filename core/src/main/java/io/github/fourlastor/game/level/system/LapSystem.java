@@ -9,8 +9,8 @@ import com.badlogic.ashley.core.Family;
 import io.github.fourlastor.game.level.component.LapComponent;
 import io.github.fourlastor.game.level.road.Road;
 import io.github.fourlastor.game.level.road.RoadCam;
-import java.util.Locale;
 import javax.inject.Inject;
+import text.formic.Stringf;
 
 public class LapSystem extends EntitySystem {
 
@@ -63,7 +63,7 @@ public class LapSystem extends EntitySystem {
         if (roadCam.position.z > nextLapZ) {
             lap += 1;
             if (lapComponent != null) {
-                lapComponent.label.setText(String.format(Locale.ROOT, "Lap %d (%.2fs)", lap, lapTime));
+                lapComponent.label.setText(Stringf.format("Lap %d (%.2fs)", lap, lapTime));
             }
             lapTime = 0;
         }
