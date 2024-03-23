@@ -14,13 +14,16 @@ public class AssetsModule {
 
     private static final String PATH_TEXTURE_ATLAS = "images/packed/images.pack.atlas";
     public static final String WHITE_PIXEL = "white-pixel";
+    public static final String PATH_FONT_64 = "fonts/Gideon Roman/gideon-roman-64.fnt";
+    public static final String PATH_FONT_128 = "fonts/Gideon Roman/gideon-roman-128.fnt";
 
     @Provides
     @Singleton
     public AssetManager assetManager() {
         AssetManager assetManager = new AssetManager();
         assetManager.load(PATH_TEXTURE_ATLAS, TextureAtlas.class);
-        assetManager.load("fonts/Gideon Roman/gideon-roman-64.fnt", BitmapFont.class);
+        assetManager.load(PATH_FONT_64, BitmapFont.class);
+        assetManager.load(PATH_FONT_128, BitmapFont.class);
         assetManager.finishLoading();
         return assetManager;
     }

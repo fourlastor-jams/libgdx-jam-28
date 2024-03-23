@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -15,7 +16,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.di.ScreenScoped;
+import io.github.fourlastor.game.di.modules.AssetsModule;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
+import io.github.fourlastor.game.level.component.GroundComponent;
 import io.github.fourlastor.game.level.component.LapComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
 import io.github.fourlastor.game.level.road.EnvironmentParallaxImage;
@@ -87,9 +90,11 @@ public class EntitiesFactory {
         bg2Img.setScale(Setup.SPRITE_SCALE);
         bg2.add(new ActorComponent(bg2Img, Layer.BG_2));
         Entity ground = new Entity();
-        Actor groundImg =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/ground"), 4f, roadCam, road);
+        TextureAtlas.AtlasRegion groundRegion = textureAtlas.findRegion("environment/ground");
+        TextureAtlas.AtlasRegion lavaRegion = textureAtlas.findRegion("environment/lava");
+        EnvironmentParallaxImage groundImg = new EnvironmentParallaxImage(groundRegion, 4f, roadCam, road);
         groundImg.setScale(Setup.SPRITE_SCALE);
+        ground.add(new GroundComponent(groundImg, groundRegion, lavaRegion));
         ground.add(new ActorComponent(groundImg, Layer.GROUND));
         return Arrays.asList(sky, stars, bg0, bg1, bg2, ground);
     }
@@ -123,14 +128,28 @@ public class EntitiesFactory {
 
     public Entity lapCounter() {
         Entity entity = new Entity();
-        BitmapFont font = assetManager.get("fonts/Gideon Roman/gideon-roman-64.fnt");
+        BitmapFont font = assetManager.get(AssetsModule.PATH_FONT_64);
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = font;
         style.fontColor = new Color(0xedce5eff);
         Label label = new Label("", style);
         label.setPosition(10, stage.getHeight() - 20, Align.topLeft);
         entity.add(new LapComponent(label));
-        entity.add(new ActorComponent(label, Layer.LAP_COUNTER));
+        entity.add(new ActorComponent(label, Layer.UI));
+        return entity;
+    }
+
+    public Entity gameOver() {
+        Entity entity = new Entity();
+        BitmapFont font = assetManager.get(AssetsModule.PATH_FONT_128);
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+        style.fontColor = new Color(0xedce5eff);
+        Label label = new Label("Oh no! You died.\nR to restart", style);
+        label.setAlignment(Align.center);
+        label.setPosition(stage.getWidth() / 2, 0, Align.top);
+        label.addAction(Actions.moveToAligned(stage.getWidth() / 2, stage.getHeight() / 2, Align.top, 1));
+        entity.add(new ActorComponent(label, Layer.UI));
         return entity;
     }
 }

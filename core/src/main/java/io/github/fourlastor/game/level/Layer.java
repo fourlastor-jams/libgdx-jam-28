@@ -9,5 +9,5 @@ public enum Layer {
     GROUND,
     ROAD,
     PLAYER,
-    LAP_COUNTER,
+    UI,
 }

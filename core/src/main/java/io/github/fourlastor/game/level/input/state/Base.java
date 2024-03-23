@@ -4,12 +4,14 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.actor.ScaledAnimatedImage;
+import io.github.fourlastor.game.level.Message;
 import io.github.fourlastor.game.level.Setup;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
 import io.github.fourlastor.game.level.component.PlayerComponent;
@@ -44,6 +46,10 @@ public class Base extends InputState {
         float delta = getDelta();
         PlayerComponent player = players().get(entity);
         RoadCam cam = cam();
+        //        if (cam.died) {
+        //            return;
+        //        }
+        Road road = dependencies.road;
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             player.speed += Setup.PLAYER_BREAKING * delta;
         } else {
@@ -57,9 +63,15 @@ public class Base extends InputState {
                 || cam.position.x > Setup.PLAYER_MAX_OFF_ROAD_POSITION / 2;
         float currentMaxSpeed = Setup.PLAYER_MAX_SPEED;
         if (offRoad) {
-            currentMaxSpeed = MathUtils.clamp(player.speed, 0, Setup.PLAYER_MAX_SPEED)
-                    + Setup.PLAYER_OFF_ROAD_DECELERATION * 3 * delta;
-            currentMaxSpeed = Math.max(currentMaxSpeed, Setup.PLAYER_MAX_SPEED_OFF_ROAD);
+            if (road.floorIsLava) {
+                cam.speedPercent = 0;
+                dependencies.dispatcher.dispatchMessage(Message.DIED_BY_LAVA.ordinal());
+                return;
+            } else {
+                currentMaxSpeed = MathUtils.clamp(player.speed, 0, Setup.PLAYER_MAX_SPEED)
+                        + Setup.PLAYER_OFF_ROAD_DECELERATION * 3 * delta;
+                currentMaxSpeed = Math.max(currentMaxSpeed, Setup.PLAYER_MAX_SPEED_OFF_ROAD);
+            }
         }
         player.speed = MathUtils.clamp(player.speed, 0, currentMaxSpeed);
         float speedPercent = player.speed / Setup.PLAYER_MAX_SPEED;
@@ -67,7 +79,6 @@ public class Base extends InputState {
         image.setSpeed(speedPercent);
         cam.position.z += player.speed;
 
-        Road road = dependencies.road;
         Segment currentSegment = road.segments.get(road.findSegmentIndex(cam.position.z));
         cam.position.x = cam.position.x
                 - Math.abs(currentSegment.dCurve)
@@ -135,6 +146,7 @@ public class Base extends InputState {
         private final ComponentMapper<PlayerComponent> players;
         private final ComponentMapper<AnimatedImageComponent> images;
         private final Road road;
+        private final MessageDispatcher dispatcher;
 
         @Inject
         public Dependencies(
@@ -142,12 +154,14 @@ public class Base extends InputState {
                 TextureAtlas atlas,
                 ComponentMapper<PlayerComponent> players,
                 ComponentMapper<AnimatedImageComponent> images,
-                Road road) {
+                Road road,
+                MessageDispatcher dispatcher) {
             this.cam = cam;
             this.atlas = atlas;
             this.players = players;
             this.images = images;
             this.road = road;
+            this.dispatcher = dispatcher;
         }
     }
 }

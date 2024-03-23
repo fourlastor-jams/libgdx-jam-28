@@ -17,7 +17,7 @@ public class EnvironmentParallaxImage extends Actor {
     private final float factor;
 
     private float currentDelta = 0;
-    private final TiledDrawable drawable;
+    private TiledDrawable drawable;
     private final RoadCam cam;
     private final Road road;
 
@@ -25,11 +25,16 @@ public class EnvironmentParallaxImage extends Actor {
         super();
         this.cam = cam;
         this.road = road;
+        setImage(textureRegion);
+        setPosition(0f, 0f);
+        this.factor = factor;
+    }
+
+    public void setImage(TextureRegion textureRegion) {
         TiledDrawable drawable = new TiledDrawable(textureRegion);
         setBounds(0f, 0f, drawable.getMinWidth(), drawable.getMinHeight());
         setPosition(0f, 0f);
         this.drawable = drawable;
-        this.factor = factor;
     }
 
     @Override
