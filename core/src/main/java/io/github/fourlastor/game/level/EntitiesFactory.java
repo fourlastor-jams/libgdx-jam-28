@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import io.github.fourlastor.game.actor.ScaledAnimatedImage;
 import io.github.fourlastor.game.di.ScreenScoped;
 import io.github.fourlastor.game.level.component.AnimatedImageComponent;
+import io.github.fourlastor.game.level.component.GroundComponent;
 import io.github.fourlastor.game.level.component.LapComponent;
 import io.github.fourlastor.game.level.component.PlayerRequestComponent;
 import io.github.fourlastor.game.level.road.EnvironmentParallaxImage;
@@ -87,9 +88,11 @@ public class EntitiesFactory {
         bg2Img.setScale(Setup.SPRITE_SCALE);
         bg2.add(new ActorComponent(bg2Img, Layer.BG_2));
         Entity ground = new Entity();
-        Actor groundImg =
-                new EnvironmentParallaxImage(textureAtlas.findRegion("environment/ground"), 4f, roadCam, road);
+        TextureAtlas.AtlasRegion groundRegion = textureAtlas.findRegion("environment/ground");
+        TextureAtlas.AtlasRegion lavaRegion = textureAtlas.findRegion("environment/lava");
+        EnvironmentParallaxImage groundImg = new EnvironmentParallaxImage(groundRegion, 4f, roadCam, road);
         groundImg.setScale(Setup.SPRITE_SCALE);
+        ground.add(new GroundComponent(groundImg, groundRegion, lavaRegion));
         ground.add(new ActorComponent(groundImg, Layer.GROUND));
         return Arrays.asList(sky, stars, bg0, bg1, bg2, ground);
     }
