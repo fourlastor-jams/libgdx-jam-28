@@ -20,7 +20,7 @@ public class Turning extends Base {
     @Inject
     public Turning(Dependencies dependencies) {
         super(dependencies);
-        animation = animation("turning");
+        animation = animation("turning_225");
     }
 
     @Override
