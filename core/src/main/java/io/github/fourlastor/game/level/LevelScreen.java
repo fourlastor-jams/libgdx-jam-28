@@ -33,6 +33,7 @@ public class LevelScreen extends ScreenAdapter {
     public void show() {
         engine.addEntity(entitiesFactory.road());
         engine.addEntity(entitiesFactory.player());
+        engine.addEntity(entitiesFactory.lapCounter());
         for (Entity entity : entitiesFactory.environment()) {
             engine.addEntity(entity);
         }

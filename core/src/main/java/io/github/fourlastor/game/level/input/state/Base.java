@@ -43,18 +43,28 @@ public class Base extends InputState {
         super.update(entity);
         float delta = getDelta();
         PlayerComponent player = players().get(entity);
+        RoadCam cam = cam();
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             player.speed += Setup.PLAYER_BREAKING * delta;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player.speed += Setup.PLAYER_ACCELERATION * delta;
         } else {
-            player.speed += Setup.PLAYER_DECELERATION * delta;
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                player.speed += Setup.PLAYER_ACCELERATION * delta;
+            } else {
+                player.speed += Setup.PLAYER_DECELERATION * delta;
+            }
         }
-        player.speed = MathUtils.clamp(player.speed, 0, Setup.PLAYER_MAX_SPEED);
+        boolean offRoad = cam.position.x < -Setup.PLAYER_MAX_OFF_ROAD_POSITION / 2
+                || cam.position.x > Setup.PLAYER_MAX_OFF_ROAD_POSITION / 2;
+        float currentMaxSpeed = Setup.PLAYER_MAX_SPEED;
+        if (offRoad) {
+            currentMaxSpeed = MathUtils.clamp(player.speed, 0, Setup.PLAYER_MAX_SPEED)
+                    + Setup.PLAYER_OFF_ROAD_DECELERATION * 3 * delta;
+            currentMaxSpeed = Math.max(currentMaxSpeed, Setup.PLAYER_MAX_SPEED_OFF_ROAD);
+        }
+        player.speed = MathUtils.clamp(player.speed, 0, currentMaxSpeed);
         float speedPercent = player.speed / Setup.PLAYER_MAX_SPEED;
         ScaledAnimatedImage image = images().get(entity).image;
         image.setSpeed(speedPercent);
-        RoadCam cam = cam();
         cam.position.z += player.speed;
 
         Road road = dependencies.road;

@@ -1,6 +1,7 @@
 package io.github.fourlastor.game.di.modules;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dagger.Module;
@@ -19,6 +20,7 @@ public class AssetsModule {
     public AssetManager assetManager() {
         AssetManager assetManager = new AssetManager();
         assetManager.load(PATH_TEXTURE_ATLAS, TextureAtlas.class);
+        assetManager.load("fonts/Gideon Roman/gideon-roman-64.fnt", BitmapFont.class);
         assetManager.finishLoading();
         return assetManager;
     }

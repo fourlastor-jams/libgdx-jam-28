@@ -12,33 +12,42 @@ import javax.inject.Inject;
 
 public class Turning extends Base {
 
-    private final Animation<Drawable> animation;
+    private final Animation<Drawable> animation1;
+    private final Animation<Drawable> animation2;
 
     private float timer = 0;
-    private boolean animSet = false;
+    private int animSet = 0;
 
     @Inject
     public Turning(Dependencies dependencies) {
         super(dependencies);
-        animation = animation("turning");
+        animation1 = animation("turning_225");
+        animation2 = animation("turning_45");
     }
 
     @Override
     public void enter(Entity entity) {
         super.enter(entity);
         timer = 0;
-        animSet = false;
+        animSet = 0;
     }
 
     @Override
     public void update(Entity entity) {
         super.update(entity);
         ScaledAnimatedImage image = images().get(entity).image;
-        if (!animSet) {
+        if (animSet == 0) {
             timer += getDelta();
             if (timer >= Setup.PLAYER_STEERING_ANIMATION_DELAY) {
-                image.setAnimation(animation);
-                animSet = true;
+                image.setAnimation(animation1);
+                animSet = 1;
+            }
+        }
+        if (animSet == 1) {
+            timer += getDelta();
+            if (timer >= Setup.PLAYER_STEERING_ANIMATION_DELAY * 4) {
+                image.setAnimation(animation2);
+                animSet = 2;
             }
         }
 
