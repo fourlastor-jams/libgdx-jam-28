@@ -78,9 +78,11 @@ public class LevelModule {
     public Road road() {
         Array<Segment> segments = new Array<>();
         int position = 0;
+        position += addRoad(segments, position, 0, Setup.SEGMENTS_VISIBLE, 0, 0);
         position += addRoad(segments, position, 150, 150, 150, 1);
         position += addRoad(segments, position, 0, 25, 0, 0);
-        addRoad(segments, position, 150, 150, 150, -2);
+        position += addRoad(segments, position, 150, 150, 150, -2);
+        addRoad(segments, position, 0, Setup.SEGMENTS_VISIBLE, 0, 0);
 
         return new Road(segments);
     }

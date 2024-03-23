@@ -22,12 +22,13 @@ public class RoadDrawable extends ShapeDrawerDrawable {
     @Override
     public void drawShapes(ShapeDrawer shapeDrawer, float x, float y, float width, float height) {
         screenRectangle.set(x, y, width, height);
-        int segmentIndex = road.findSegmentIndex(cam.position.z);
-        for (int i = segmentIndex, counter = 0;
-                i < road.segments.size && counter < Setup.SEGMENTS_VISIBLE;
-                i++, counter++) {
-            Segment segment = road.segments.get(i);
-            segment.project(cam.position.x, cam.position.y, cam.position.z, cam.depth, width, height, width / 2, x, y);
+        int initialSegmentIndex = road.findSegmentIndex(cam.position.z);
+        for (int i = initialSegmentIndex, counter = 0; counter < Setup.SEGMENTS_VISIBLE; i++, counter++) {
+            int currentSegmentIndex = i % road.segments.size;
+            boolean looped = currentSegmentIndex < initialSegmentIndex;
+            Segment segment = road.segments.get(currentSegmentIndex);
+            float cameraZ = (cam.position.z % road.totalLength) - (looped ? road.totalLength : 0);
+            segment.project(cam.position.x, cam.position.y, cameraZ, cam.depth, width, height, width / 2, x, y);
             if (segment.inside(screenRectangle)) {
                 segment.render(shapeDrawer);
             }

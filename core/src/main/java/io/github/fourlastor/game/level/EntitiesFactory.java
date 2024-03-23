@@ -105,11 +105,6 @@ public class EntitiesFactory {
 
     public Entity road() {
         Entity entity = new Entity();
-        Array<Segment> segments = new Array<>();
-        int position = 0;
-        position += addRoad(segments, position, 150, 150, 150, 1);
-        position += addRoad(segments, position, 0, 25, 0, 0);
-        addRoad(segments, position, 150, 150, 150, -2);
         ShapeDrawerDrawable drawable = new RoadDrawable(shapeDrawer, road, roadCam);
         Image image = new Image(drawable);
         image.setSize(stage.getWidth(), stage.getHeight());
