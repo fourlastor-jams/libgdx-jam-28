@@ -87,7 +87,8 @@ public class LapSystem extends EntitySystem {
                 lapComponent.label.setText(Stringf.format("Lap %d (%.2fs)", lap, lapTime));
             }
             if (groundComponent != null) {
-                groundComponent.image.setImage(lap % 2 == 0 ? groundComponent.ground : groundComponent.lava);
+                road.floorIsLava = !road.floorIsLava;
+                groundComponent.image.setImage(road.floorIsLava ? groundComponent.lava : groundComponent.ground);
                 groundComponent.image.setScale(Setup.SPRITE_SCALE);
             }
             lapTime = 0;

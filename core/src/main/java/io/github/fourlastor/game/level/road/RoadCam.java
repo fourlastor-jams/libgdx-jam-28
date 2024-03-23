@@ -17,6 +17,8 @@ public class RoadCam {
     /** TODO: Hack for parallax. */
     public float speedPercent;
 
+    public boolean died;
+
     public RoadCam(float initialY, float initialDepth) {
         position.y = initialY;
         depth = initialDepth;

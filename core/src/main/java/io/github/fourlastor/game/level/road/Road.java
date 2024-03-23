@@ -8,6 +8,8 @@ public class Road {
     public final Array<Segment> segments;
     public final float totalLength;
 
+    public boolean floorIsLava = false;
+
     public Road(Array<Segment> segments) {
         this.segments = segments;
         this.totalLength = Setup.SEGMENT_LENGTH * segments.size;
