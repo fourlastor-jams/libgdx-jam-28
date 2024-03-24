@@ -1,6 +1,7 @@
 package io.github.fourlastor.game.di.modules;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,6 +17,7 @@ public class AssetsModule {
     public static final String WHITE_PIXEL = "white-pixel";
     public static final String PATH_FONT_64 = "fonts/Gideon Roman/gideon-roman-64.fnt";
     public static final String PATH_FONT_128 = "fonts/Gideon Roman/gideon-roman-128.fnt";
+    public static final String PATH_BG_MUSIC = "audio/music/TomaszKucza-Menace.mp3";
 
     @Provides
     @Singleton
@@ -24,6 +26,7 @@ public class AssetsModule {
         assetManager.load(PATH_TEXTURE_ATLAS, TextureAtlas.class);
         assetManager.load(PATH_FONT_64, BitmapFont.class);
         assetManager.load(PATH_FONT_128, BitmapFont.class);
+        assetManager.load(PATH_BG_MUSIC, Music.class);
         assetManager.finishLoading();
         return assetManager;
     }

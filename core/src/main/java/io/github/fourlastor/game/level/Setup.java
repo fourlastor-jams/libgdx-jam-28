@@ -20,7 +20,7 @@ public interface Setup {
     /** How many segments form a single patch of road. */
     int RUMBLE_LENGTH = 8;
 
-    float PLAYER_MAX_SPEED = 100;
+    float PLAYER_MAX_SPEED = 130;
     float PLAYER_MAX_SPEED_OFF_ROAD = PLAYER_MAX_SPEED / 2;
     float PLAYER_ACCELERATION = 40;
     float PLAYER_DECELERATION = -20;

@@ -9,8 +9,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.fourlastor.game.di.modules.AssetsModule;
 import io.github.fourlastor.game.route.Router;
+import io.github.fourlastor.perceptual.Perceptual;
+
 import javax.inject.Inject;
 
 public class LevelScreen extends ScreenAdapter implements Telegraph {
@@ -22,6 +27,7 @@ public class LevelScreen extends ScreenAdapter implements Telegraph {
     private final Viewport viewport;
     private final EntitiesFactory entitiesFactory;
     private final MessageDispatcher dispatcher;
+    private final Music music;
     private Entity player;
     private boolean died;
     private InputAdapter processor;
@@ -33,13 +39,15 @@ public class LevelScreen extends ScreenAdapter implements Telegraph {
             Engine engine,
             Viewport viewport,
             EntitiesFactory entitiesFactory,
-            MessageDispatcher dispatcher) {
+            MessageDispatcher dispatcher,
+            AssetManager manager) {
         this.multiplexer = multiplexer;
         this.router = router;
         this.engine = engine;
         this.viewport = viewport;
         this.entitiesFactory = entitiesFactory;
         this.dispatcher = dispatcher;
+        this.music = manager.get(AssetsModule.PATH_BG_MUSIC);
     }
 
     @Override
@@ -72,6 +80,9 @@ public class LevelScreen extends ScreenAdapter implements Telegraph {
             }
         };
         multiplexer.addProcessor(processor);
+        music.setLooping(true);
+        music.setVolume(Perceptual.perceptualToAmplitude(0.8f));
+        music.play();
     }
 
     @Override
@@ -79,6 +90,7 @@ public class LevelScreen extends ScreenAdapter implements Telegraph {
         multiplexer.removeProcessor(processor);
         engine.removeAllEntities();
         engine.removeAllSystems();
+        music.stop();
     }
 
     @Override
