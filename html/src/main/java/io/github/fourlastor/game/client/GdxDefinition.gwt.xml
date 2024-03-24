@@ -12,6 +12,7 @@
 	<inherits name="com.github.tommyettinger.jdkgdxds" />
 	<inherits name="space.earlygrey.shapedrawer"/>
 
+	<inherits name="io.github.fourlastor.Perceptual" />
 	<inherits name="io.github.fourlastor.GdxGame" />
 	<inherits name="io.github.fourlastor.Harlequin" />
 	<inherits name="io.github.fourlastor.HarlequinAshley" />
