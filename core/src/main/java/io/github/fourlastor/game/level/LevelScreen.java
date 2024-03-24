@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.fourlastor.game.di.modules.AssetsModule;
 import io.github.fourlastor.game.route.Router;
 import io.github.fourlastor.perceptual.Perceptual;
-
 import javax.inject.Inject;
 
 public class LevelScreen extends ScreenAdapter implements Telegraph {
