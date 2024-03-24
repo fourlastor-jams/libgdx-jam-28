@@ -89,40 +89,6 @@ public class Base extends InputState {
                 cam.position.x, -Setup.PLAYER_MAX_OFF_ROAD_POSITION, Setup.PLAYER_MAX_OFF_ROAD_POSITION);
 
         cam.speedPercent = speedPercent;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                cam.position.y += 30;
-            } else {
-                cam.position.y += 10;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                cam.position.y -= 30;
-            } else {
-                cam.position.y -= 10;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                cam.depth += 1f;
-            } else {
-                cam.depth += 0.1f;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                cam.depth -= 1f;
-            } else {
-                cam.depth -= 0.1f;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_0)) {
-            cam.position.z = 0;
-            cam.position.y = Setup.INITIAL_CAMERA_Y;
-            cam.depth = Setup.INITIAL_CAMERA_DEPTH;
-        }
     }
 
     protected ComponentMapper<AnimatedImageComponent> images() {
